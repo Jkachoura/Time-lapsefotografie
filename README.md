@@ -15,3 +15,20 @@ De opleiding Biologie en Medisch Laboratoriumonderzoek bezit een fluorescentiemi
 
 ## Installatie
 ### Benodigdheden
+Installeer de volgende benodigheden
+
+- [python](https://www.python.org/downloads/release/python-3110/)(versie 3.11.0)
+- [pip](https://pip.pypa.io/en/stable/installation/)(indien niet geinstalleerd)
+
+### Building
+1. Clone the repository
+
+```bash
+$ git clone https://github.com/Jkachoura/Time-lapsefotografie.git
+```
+
+2. Enter the cloned repository and install the dependencies
+
+```bash
+$ pip install -r requirements.txt
+```
