@@ -21,8 +21,8 @@ De opleiding Biologie en Medisch Laboratoriumonderzoek bezit een fluorescentiemi
 ### Benodigdheden
 Installeer de volgende benodigheden
 
-- [python](https://www.python.org/downloads/release/python-3110/)(versie 3.11.0)
-- [pip](https://pip.pypa.io/en/stable/installation/)(indien niet geinstalleerd)
+- [python](https://www.python.org/downloads/release/python-3110/) (versie 3.11.0)
+- [pip](https://pip.pypa.io/en/stable/installation/) (indien niet geinstalleerd)
 
 ### Building
 1. Clone the repository
