@@ -7,6 +7,9 @@
 ## Inhoudsopgave
 - [Introductie](#introductie)
 - [Probleembeschrijving](#probleembeschrijving)
+- [Installatie](#installatie)
+    - [Benodigdheden](#benodigdheden)
+    - [Building](#building)
 ## Introductie
 Voor project 7/8 hebben wij de opdracht gekregen om een time-lapse-fotografie-programma te ontwikkelen voor een ZOE-fluorescentiemicroscoop. Dit project voeren we uit voor de Biologie en Medisch Labaratoriumonderzoek (BML) afdeling aan het Hogeschool Rotterdam - Academieplein.
 
