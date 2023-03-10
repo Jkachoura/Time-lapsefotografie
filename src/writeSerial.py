@@ -1,9 +1,8 @@
 # Test code for sending serial commands to ZOE, this command will reboot the ZOE cell imager.
 import serial
 import time
-import sys
 import datetime
-
+import serial.tools.list_ports
 capture = [1981,1973]
 export = [1982,1974]
 live = [1941,435]
