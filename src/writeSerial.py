@@ -26,8 +26,9 @@ def serial_ports():
             pass
     return result
 
-comPort = serial_ports()[0]
-ser = serial.Serial(comPort, 115200, timeout=1)
+if __name__ == "__main__":
+    comPort = serial_ports()[0]
+    ser = serial.Serial(comPort, 115200, timeout=1)
 
 capture = [1981,1973]
 
