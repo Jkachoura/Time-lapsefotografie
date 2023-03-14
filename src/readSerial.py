@@ -5,12 +5,6 @@ import serial
 import time
 
 if __name__ == "__main__":
-    """ Lists serial port names
-        :raises EnvironmentError:
-            On unsupported or unknown platforms
-        :returns:
-            A list of the serial ports available on the system
-    """
     ports = [port.device for port in comports()]
     ser = serial.Serial(ports[0], 115200, timeout=1)
 
