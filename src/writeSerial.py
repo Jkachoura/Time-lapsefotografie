@@ -56,21 +56,20 @@ if __name__ == "__main__":
     comPort = serial_ports()[0]
     ser = serial.Serial(comPort, 115200, timeout=1)
     # timelapse with 2 leds.
-    # TODO its not working properly yet cause of the maximum events the shell can take need to find a solution for this
-    while takenpictures <= totalpictures:
-        if WLED:
-            ct = datetime.datetime.now()
-            print("Taking WLED picture " + str(takenpictures) + " " + str(ct))
-            touchButt(live)
-            touchButt(wLed)
-            touchButt(capture)
-            time.sleep(10)
-            takenpictures += 1
+    while takenpictures < totalpictures:
         if BLED:
             ct = datetime.datetime.now()
             print("Taking BLED picture " + str(takenpictures) + " " + str(ct))
             touchButt(live)
             touchButt(bLed)
+            touchButt(capture)
+            time.sleep(10)
+            takenpictures += 1
+        if WLED:
+            ct = datetime.datetime.now()
+            print("Taking WLED picture " + str(takenpictures) + " " + str(ct))
+            touchButt(live)
+            touchButt(wLed)
             touchButt(capture)
             time.sleep(10)
             takenpictures += 1
@@ -95,3 +94,4 @@ if __name__ == "__main__":
         if takenpictures != totalpictures:
             time.sleep(captureInterval - rebootTime)
     print("Done with timelapse")
+    ser.write(b'reboot\r\n')
