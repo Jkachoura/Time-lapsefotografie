@@ -11,14 +11,19 @@ bLed = [88, 1041]
 gLed = [89, 1251]
 rLed = [90, 1503]
 
+# the time between full capture cycles
 captureInterval= 30
+# the total time of the timelapse
 timelapseDuration = 3 * captureInterval
-totalpictures = (timelapseDuration / captureInterval) * 2 + 2
+# the amount of pictures in total that should be taken
+totalpictures = (timelapseDuration / captureInterval) * 4 + 4
 takenpictures = 0
+# the time it takes for the microscope to reboot
+rebootTime = 20
 
-WLED = False
+WLED = True
 BLED = True
-GLED = False
+GLED = True
 RLED = True
 
 def serial_ports():
@@ -85,6 +90,8 @@ if __name__ == "__main__":
             touchButt(capture)
             time.sleep(10)
             takenpictures += 1
+        ser.write(b'reboot\r\n')
+        time.sleep(rebootTime)
         if takenpictures != totalpictures:
-            time.sleep(captureInterval)
+            time.sleep(captureInterval - rebootTime)
     print("Done with timelapse")
