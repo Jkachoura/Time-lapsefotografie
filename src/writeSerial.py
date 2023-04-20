@@ -5,9 +5,9 @@ import serial.tools.list_ports
 from itertools import compress
 
 RLED = True
-GLED = False
+GLED = True
 BLED = True
-WLED = False
+WLED = True
 
 # Button coordinates
 capture =   [1981, 1973]
@@ -19,7 +19,7 @@ gLed    =   [89, 1251]
 rLed    =   [90, 1503]
 
 # Microscope reboot time
-rebootTime = 20
+captureDelay = 10
 
 def serial_ports():
     """List serial port names
@@ -39,19 +39,25 @@ def touchButton(input):
     Args:
         input: (x, y) screen coordinate
     """
-
+    if input == "reboot":
+        ser.write(b'reboot\r\n')
+        return
+    
     xString = f'sendevent /dev/input/event1 3 53 {str(input[0])}\r\n'
     yString = f'sendevent /dev/input/event1 3 54 {str(input[1])}\r\n'
+    xString2 = f'sendevent /dev/input/event1 3 53 {str(input[0]+2)}\r\n'
+    yString2 = f'sendevent /dev/input/event1 3 54 {str(input[1]+2)}\r\n'
 
     ser.write(b'sendevent /dev/input/event1 3 57 0\r\n')
     ser.write(bytes(xString, encoding= 'utf-8'))
     ser.write(bytes(yString, encoding= 'utf-8'))
     ser.write(b'sendevent /dev/input/event1 0 0 0\r\n')
+    ser.write(bytes(xString2, encoding= 'utf-8'))
+    ser.write(bytes(yString2, encoding= 'utf-8'))
     time.sleep(0.1)
-    ser.write(b'sendevent /dev/input/event1 3 57 -1\r\n')
-    ser.write(b'sendevent /dev/input/event1 0 2 0\r\n')
     ser.write(b'sendevent /dev/input/event1 0 0 0\r\n')
-    time.sleep(2)
+    ser.write(b'sendevent /dev/input/event1 3 57 -1\r\n')
+    ser.write(b'sendevent /dev/input/event1 0 0 0\r\n')
 
 def takeCapture(led):
     """Simulate events to take capture
@@ -63,11 +69,7 @@ def takeCapture(led):
     touchButton(live)
     touchButton(led)
     touchButton(capture)
-    time.sleep(10)
-
-def reboot():
-    ser.write(b'reboot\r\n')
-    time.sleep(rebootTime)
+    time.sleep(captureDelay)
 
 def makeTimeLapse(cycleAmount, cycleInterval, ledColours):
     """Make a time-lapse based on given arguments
@@ -85,12 +87,11 @@ def makeTimeLapse(cycleAmount, cycleInterval, ledColours):
             takeCapture(led)
         takenCycles += 1
         takenPictures += len(ledColours)
-        reboot()
-        time.sleep(cycleInterval - rebootTime)
+        print("Cycle " + str(takenCycles) + " is done")
+        time.sleep(cycleInterval - captureDelay)
     print("Done with timelapse, total pictures taken: " + str(takenPictures))
-    reboot()
 
 if __name__ == "__main__":
     comPort = serial_ports()[0]
     ser = serial.Serial(comPort, 115200, timeout=1)
-    makeTimeLapse(2, 30, list(compress([rLed, gLed, bLed, wLed], [RLED, GLED, BLED, WLED])))
+    makeTimeLapse(6, 20, list(compress([rLed, gLed, bLed, wLed], [RLED, GLED, BLED, WLED])))
