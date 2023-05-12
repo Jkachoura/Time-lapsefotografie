@@ -5,9 +5,9 @@ import serial.tools.list_ports
 from itertools import compress
 
 RLED  = True
-GLED  = True
+GLED  = False
 BLED  = True
-WLED  = True
+WLED  = False
 MERGE = True
 
 # Button coordinates
@@ -91,6 +91,7 @@ def makeMerge():
     touchButton(save)
     time.sleep(saveDelay)
     touchButton(deselect)
+    touchButton(export)
 
 def makeTimeLapse(cycleAmount, cycleInterval, ledColours):
     """Make a time-lapse based on given arguments
@@ -120,4 +121,4 @@ def makeTimeLapse(cycleAmount, cycleInterval, ledColours):
 if __name__ == "__main__":
     comPort = serial_ports()[0]
     ser = serial.Serial(comPort, 115200, timeout=1)
-    makeTimeLapse(2, 20, list(compress([rLed, gLed, bLed, wLed], [RLED, GLED, BLED, WLED])))
+    makeTimeLapse(2, 360, list(compress([rLed, gLed, bLed, wLed], [RLED, GLED, BLED, WLED])))
