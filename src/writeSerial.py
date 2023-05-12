@@ -4,22 +4,31 @@ import time
 import serial.tools.list_ports
 from itertools import compress
 
-RLED = True
-GLED = True
-BLED = True
-WLED = True
+RLED  = True
+GLED  = True
+BLED  = True
+WLED  = True
+MERGE = True
 
 # Button coordinates
-capture =   [1981, 1973]
-export  =   [1982, 1974]
-live    =   [1941, 435]
-wLed    =   [87, 762]
-bLed    =   [88, 1041]
-gLed    =   [89, 1251]
-rLed    =   [90, 1503]
+capture  =   [1981, 1973]
+save     =   [1981, 1973]
+export   =   [1982, 1974]
+live     =   [1941, 435]
+wLed     =   [87, 762]
+bLed     =   [88, 1041]
+gLed     =   [89, 1251]
+rLed     =   [90, 1503]
+select   =   [1458, 127]
+merge    =   [1950, 849]
+deselect =   [1782, 129]
 
-# Microscope reboot time
-captureDelay = 10
+# Microscope capture time
+captureDelay = 15
+# Microscope merge time
+mergeDelay = 5
+# Microscope save time
+saveDelay = 5
 
 def serial_ports():
     """List serial port names
@@ -70,6 +79,18 @@ def takeCapture(led):
     touchButton(led)
     touchButton(capture)
     time.sleep(captureDelay)
+    touchButton(select)
+
+def makeMerge():
+    """ Merges selected images
+
+    """
+
+    touchButton(merge)
+    time.sleep(mergeDelay)
+    touchButton(save)
+    time.sleep(saveDelay)
+    touchButton(deselect)
 
 def makeTimeLapse(cycleAmount, cycleInterval, ledColours):
     """Make a time-lapse based on given arguments
@@ -82,16 +103,21 @@ def makeTimeLapse(cycleAmount, cycleInterval, ledColours):
 
     takenCycles = 0
     takenPictures = 0
+    madeMerges = 0
     while takenCycles < cycleAmount:
         for led in ledColours:
             takeCapture(led)
+        if MERGE:
+            makeMerge()
+            madeMerges += 1
         takenCycles += 1
         takenPictures += len(ledColours)
         print("Cycle " + str(takenCycles) + " is done")
         time.sleep(cycleInterval - captureDelay)
     print("Done with timelapse, total pictures taken: " + str(takenPictures))
+    print("Total merged pictures: " + str(madeMerges))
 
 if __name__ == "__main__":
     comPort = serial_ports()[0]
     ser = serial.Serial(comPort, 115200, timeout=1)
-    makeTimeLapse(6, 20, list(compress([rLed, gLed, bLed, wLed], [RLED, GLED, BLED, WLED])))
+    makeTimeLapse(2, 20, list(compress([rLed, gLed, bLed, wLed], [RLED, GLED, BLED, WLED])))
