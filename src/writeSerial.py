@@ -6,9 +6,9 @@ from itertools import compress
 
 RLED  = True
 GLED  = False
-BLED  = True
+BLED  = False
 WLED  = False
-MERGE = True
+MERGE = False
 
 # Button coordinates
 capture  =   [1981, 1973]
@@ -22,6 +22,7 @@ rLed     =   [90, 1503]
 select   =   [1458, 127]
 merge    =   [1950, 849]
 deselect =   [1782, 129]
+gallery  =   [1950, 642]
 
 # Microscope capture time
 captureDelay = 15
@@ -29,6 +30,10 @@ captureDelay = 15
 mergeDelay = 5
 # Microscope save time
 saveDelay = 5
+# Microscope export time
+exportDelay = 10
+# Microscope sleep time
+sleepTime = 300
 
 def serial_ports():
     """List serial port names
@@ -80,6 +85,8 @@ def takeCapture(led):
     touchButton(capture)
     time.sleep(captureDelay)
     touchButton(select)
+    touchButton(export)
+    time.sleep(exportDelay)
 
 def makeMerge():
     """ Merges selected images
@@ -114,11 +121,18 @@ def makeTimeLapse(cycleAmount, cycleInterval, ledColours):
         takenCycles += 1
         takenPictures += len(ledColours)
         print("Cycle " + str(takenCycles) + " is done")
-        time.sleep(cycleInterval - captureDelay)
+        if cycleInterval > sleepTime:
+            touchAmount = int(cycleInterval / sleepTime)
+            for i in range(touchAmount):
+                time.sleep(sleepTime)
+                touchButton(gallery)
+            time.sleep(cycleInterval - (touchAmount * sleepTime))
+        else:
+            time.sleep(cycleInterval)
     print("Done with timelapse, total pictures taken: " + str(takenPictures))
     print("Total merged pictures: " + str(madeMerges))
 
 if __name__ == "__main__":
     comPort = serial_ports()[0]
     ser = serial.Serial(comPort, 115200, timeout=1)
-    makeTimeLapse(2, 360, list(compress([rLed, gLed, bLed, wLed], [RLED, GLED, BLED, WLED])))
+    makeTimeLapse(3, 360, list(compress([rLed, gLed, bLed, wLed], [RLED, GLED, BLED, WLED])))
