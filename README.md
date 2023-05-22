@@ -56,7 +56,7 @@ Wachtwoord:
 
 4. Druk op de color pagina en configureer de settings
 
-```bash
+```
 Enable White LED: Dit zorgt ervoor dat er foto's worden gemaakt met het witte licht. Vink aan om dit te gebruiken
 Enable Blue LED: Dit zorgt ervoor dat er foto's worden gemaakt met het blauwe licht. Vink aan om dit te gebruiken
 Enable Green LED: Dit zorgt ervoor dat er foto's worden gemaakt met het groene licht. Vink aan om dit te gebruiken
