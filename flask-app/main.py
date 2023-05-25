@@ -36,8 +36,8 @@ lastLED = wLed
 def serial_ports():
     """List serial port names
 
-        returns:
-            A list of the serial ports available on the system
+    returns:
+        A list of the serial ports available on the system
     """
     ports = list(serial.tools.list_ports.comports())
     result = []
@@ -116,6 +116,9 @@ def makeTimeLapse(cycleAmount, cycleInterval, ledColours, merge):
         cycleAmount: amount of cycles in time-lapse
         cycleInterval: time between cycles
         ledColours: list of led colours to make the captures
+    
+    returns:
+        Timelapse results   
     """
 
     takenCycles = 0
@@ -146,6 +149,10 @@ def makeTimeLapse(cycleAmount, cycleInterval, ledColours, merge):
             time.sleep(cycleInterval)
     print("Done with timelapse, total pictures taken: " + str(takenPictures))
     print("Total merged pictures: " + str(madeMerges))
+
+    output = f"Timelapse is finished!\nCycle amount: {cycleAmount}\nTotal pictures taken: {takenPictures}\nTotal merged pictures: { madeMerges}"
+
+    return output  
 
 class colorSetup(FlaskForm):
     wLedEnable = BooleanField("Enable White LED:")
@@ -203,10 +210,10 @@ def confirmation():
 
     return render_template('confirmation.html', form_data=form_data)
 
-@app.route('/terminal' )
+@app.route('/results' )
 def terminal():
     output = session.get('output')
-    return render_template('terminal.html', output=output)
+    return render_template('results.html', output=output)
 
 if __name__ == "__main__":
     app.run(host="localhost", port=8080, debug=True)
