@@ -33,7 +33,9 @@ saveDelay = 5
 # Microscope export time
 exportDelay = 10
 # Microscope sleep time
-sleepTime = 300
+sleepTime = 1800
+# Keep in track of lastLED for cycles with 1 LED
+lastLED = wLed
 
 def serial_ports():
     """List serial port names
@@ -53,10 +55,11 @@ def touchButton(input):
     Args:
         input: (x, y) screen coordinate
     """
+
     if input == "reboot":
         ser.write(b'reboot\r\n')
         return
-    
+
     xString = f'sendevent /dev/input/event1 3 53 {str(input[0])}\r\n'
     yString = f'sendevent /dev/input/event1 3 54 {str(input[1])}\r\n'
     xString2 = f'sendevent /dev/input/event1 3 53 {str(input[0]+2)}\r\n'
@@ -80,8 +83,13 @@ def takeCapture(led):
         led: capture colour
     """
 
+    global lastLED
+
     touchButton(live)
-    touchButton(led)
+    # Touch wanted LED when last LED was different
+    if not led == lastLED:
+        touchButton(led)
+    lastLED = led
     touchButton(capture)
     time.sleep(captureDelay)
     touchButton(select)
@@ -100,7 +108,7 @@ def makeMerge():
     touchButton(deselect)
     touchButton(export)
 
-def makeTimeLapse(cycleAmount, cycleInterval, ledColours):
+def makeTimeLapse(cycleAmount, cycleInterval, ledColours, merge):
     """Make a time-lapse based on given arguments
 
     Args:
@@ -112,20 +120,26 @@ def makeTimeLapse(cycleAmount, cycleInterval, ledColours):
     takenCycles = 0
     takenPictures = 0
     madeMerges = 0
+    # Loop through wanted cycles
     while takenCycles < cycleAmount:
+        # Make capture of LED list
         for led in ledColours:
             takeCapture(led)
-        if MERGE:
+        if merge:
             makeMerge()
             madeMerges += 1
         takenCycles += 1
         takenPictures += len(ledColours)
+
         print("Cycle " + str(takenCycles) + " is done")
+        # Prevent ZOE from turning off by emulating touch every sleeptime duration
         if cycleInterval > sleepTime:
+            # Amount that sleeptime fits in cycle-interval
             touchAmount = int(cycleInterval / sleepTime)
             for i in range(touchAmount):
                 time.sleep(sleepTime)
                 touchButton(gallery)
+            # Remainder
             time.sleep(cycleInterval - (touchAmount * sleepTime))
         else:
             time.sleep(cycleInterval)
@@ -135,4 +149,4 @@ def makeTimeLapse(cycleAmount, cycleInterval, ledColours):
 if __name__ == "__main__":
     comPort = serial_ports()[0]
     ser = serial.Serial(comPort, 115200, timeout=1)
-    makeTimeLapse(3, 360, list(compress([rLed, gLed, bLed, wLed], [RLED, GLED, BLED, WLED])))
+    makeTimeLapse(3, 360, list(compress([rLed, gLed, bLed, wLed], [RLED, GLED, BLED, WLED])), True)
