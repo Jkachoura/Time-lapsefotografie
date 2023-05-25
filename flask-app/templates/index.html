@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f1f1f1;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  font-size: 32px;
+  text-align: center;
+  margin-top: 50px;
+}
+
+p {
+  font-size: 18px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+a {
+  color: #4CAF50;
+}
+
+a:hover {
+  color: #3e8e41;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+</style>
+<h1>Welcome to the timelapse webpage</h1>
+<p>Click <a href="{{url_for('settings')}}">here</a> to setup the timelapse settings</p>
+
+{% endblock %}

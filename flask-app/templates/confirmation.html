@@ -1,0 +1,83 @@
+<style>
+    .confirmation {
+        margin: 20px;
+        padding: 20px;
+        background-color: #f1f1f1;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-family: "Arial";
+    }
+
+    .confirmation h1 {
+        color: #333;
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .confirmation h2 {
+        color: #333;
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .confirmation p {
+        color: #666;
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+
+    .confirmation button {
+        margin-top: 20px;
+        background-color: #4CAF50;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.2s ease-in-out;
+    }
+
+    .confirmation button:hover {
+        background-color: #3e8e41;
+    }
+
+    #loading-message {
+        display: none;
+        margin-top: 20px;
+        color: #666;
+        font-size: 16px;
+    }
+</style>
+<head>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <title>Confirmation</title>
+</head>
+<div class="confirmation">
+    <h1>Confirmation</h1>
+    <h2>Submitted Values:</h2>
+    <p>White LED: {{ form_data.w_led_enable }}</p>
+    <p>Blue LED: {{ form_data.b_led_enable }}</p>
+    <p>Green LED: {{ form_data.g_led_enable }}</p>
+    <p>Red LED: {{ form_data.r_led_enable }}</p>
+    <p>Merge: {{ form_data.merge_enable }}</p>
+    <p>Cycle Amount: {{ form_data.cycle_amount }}</p>
+    <p>Cycle Interval: {{ form_data.cycle_interval }}</p>
+    
+    <form method="POST" action="{{ url_for('confirmation') }}">
+        <button type="submit" name="make_timelapse" onclick="showLoading()">Make Timelapse</button>
+    </form>
+
+    <div id="loading-message">Now loading...</div>
+
+    <script>
+        function showLoading() {
+            var loadingMessage = document.getElementById('loading-message');
+            loadingMessage.style.display = 'block';
+        }
+    </script>
+</div>
