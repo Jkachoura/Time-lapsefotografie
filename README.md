@@ -50,7 +50,7 @@ SSID: ZOE
 Wachtwoord: 
 ```
 
-2. De webbrowser is op de volgende url te vinden [http://142.122.32.80](http://142.122.32.80)
+2. De webbrowser is op de volgende url te vinden [http://192.168.4.1:8080](http://192.168.4.1:8080)
 
 3. Steek je USB in de microscoop. Zorg er voor dat er genoeg capaciteit er op zit. Voor veel fotocycli* en lange timelapse denk aan 4 GB.
 
@@ -65,7 +65,7 @@ Enable Merge: Dit zorg ervoor dat de foto's die gemaakt worden samen gemengd wor
 Cycle Amount: Hoeveel fotocycli* wil je nemen.
 Cycle Interval: Hoeveelheid tijd tussen fotocycli in (minuten).
 
-fotocycli: In een fotocyclus wordt er van elk gekozen LED een foto gemaakt plus merge foto indien geselecteerd
+*fotocycli: In een fotocyclus wordt er van elk gekozen LED een foto gemaakt plus merge foto indien geselecteerd
 
 ```
 
