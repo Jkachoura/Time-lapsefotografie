@@ -187,17 +187,17 @@ Voor langdurige processen doet er een probleem zich voort. Als je via SSH het pr
 Echter is er betere oplossing. Door het aanmaken van een service kan je via SSH vertellen aan de RasPi dat hij lokaal het proces moet starten zodat het proces niet beeindigd wordt wanneer SSH sluit. Bovendien kan je instellen dat het programma zichzelf automatisch opstart. Dit instellen gaat als volgt:
 1. `sudo nano /etc/systemd/system/zoe.service`
 2. Zet deze code er in:
-```
+```bash
 [Unit]
 Description=My test service
 After=multi-user.target
 [Install]
 WantedBy=multi-user.target
 [Service]
-Type=simple
-User=rae
+Type=simple     
+User=JouwHostName           # JouwHostName verander je door je eigen gekozen hostname
 PermissionsStartOnly=true
-ExecStart=/usr/bin/python /home/rae/Time-lapsefotografie-main/flask-app/main.py
+ExecStart=/usr/bin/python /home/JouwHostName/Time-lapsefotografie-main/flask-app/main.py
 Restart=on-failure
 TimeoutSec=600
 ```
@@ -206,6 +206,7 @@ TimeoutSec=600
 
 Voor meer informatie kan je [deze](https://medium.com/codex/setup-a-python-script-as-a-service-through-systemctl-systemd-f0cc55a42267) webpagina raadplegen
 
+**Notes** 
 
 ## Usage
 
