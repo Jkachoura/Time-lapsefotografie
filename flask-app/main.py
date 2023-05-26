@@ -161,7 +161,7 @@ class colorSetup(FlaskForm):
     rLedEnable = BooleanField("Enable Red LED:")
     mergeEnable = BooleanField("Enable Merge:")
     cycleAmount = IntegerField("Cycle Amount:")
-    cycleInterval = IntegerField("Cycle Interval:")
+    cycleInterval = IntegerField("Cycle Interval (in minutes):")
     submit = SubmitField("Submit settings")
 
 app = Flask(__name__)
@@ -200,7 +200,7 @@ def confirmation():
         if form_data:
             session.pop('form_data', None)
             output = makeTimeLapse(form_data['cycle_amount'],
-                                   form_data['cycle_interval'],
+                                   (form_data['cycle_interval']*60),
                                    list(compress([rLed, gLed, bLed, wLed], [form_data['r_led_enable'], form_data['g_led_enable'], form_data['b_led_enable'], form_data['w_led_enable']])),
                                    form_data['merge_enable'])
             session['output'] = output  
