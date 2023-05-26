@@ -216,7 +216,7 @@ SSID: MyAccessPoint  # Vervang "MyAccessPoint" door de gewenste naam voor je acc
 Wachtwoord: MyPassphrase  # Vervang "MyPassphrase" door het gewenste wachtwoord voor je access point 
 ```
 
-2. De webbrowser is op de volgende url te vinden [http://192.168.4.1](http://192.168.4.1:8080)
+2. De webbrowser is op de volgende url te vinden [http://192.168.4.1:8080](http://192.168.4.1:8080)
 
 3. Steek je USB in de microscoop. Zorg er voor dat er genoeg capaciteit er op zit. Voor veel fotocycli* en lange timelapse denk aan 4 GB.
 
