@@ -206,7 +206,6 @@ TimeoutSec=600
 
 Voor meer informatie kan je [deze](https://medium.com/codex/setup-a-python-script-as-a-service-through-systemctl-systemd-f0cc55a42267) webpagina raadplegen
 
-**Notes** 
 
 ## Usage
 
