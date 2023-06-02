@@ -180,6 +180,20 @@ sudo systemctl start dnsmasq
 ```bash
 sudo reboot
 ```
+
+**Notes** Onderaan het script moet de host veranderd worden door de jouw ingestelde IP-adres dus:
+
+```python
+if __name__ == "__main__":
+    app.run(host="localhost", port=8080, debug=True)
+```
+
+Naar bijvoorbeeld dit:
+```python
+if __name__ == "__main__":
+    app.run(host="192.168.4.1", port=8080, debug=True)
+```
+
 #### Fix voor processen die lang lopen
 
 Voor langdurige processen doet er een probleem zich voort. Als je via SSH het process start zal het process beeindigen wanneer de SSH sessie afgesloten wordt. Het is niet wenselijk om vier dagen lang verbonden te zijn, daarom is er een andere oplossing vereist. 1 van die oplossingen is terminal multiplexing. Dit kan gestart worden met behulp van [tmux](https://www.tomshardware.com/how-to/run-long-running-scripts-raspberry-pi). Log in via SSH met de ingestelde static ip adres en start een tmux sessie. 
@@ -209,12 +223,9 @@ Voor meer informatie kan je [deze](https://medium.com/codex/setup-a-python-scrip
 
 ## Usage
 
-1. Verbindt met de WiFi, die is opgezet door de Raspberry Pi, via je 
+1. Verbindt met de Acces Point, die is opgezet door de Raspberry Pi, via je 
 toestel.
-```bash
-SSID: MyAccessPoint  # Vervang "MyAccessPoint" door de gewenste naam voor je access point
-Wachtwoord: MyPassphrase  # Vervang "MyPassphrase" door het gewenste wachtwoord voor je access point 
-```
+
 
 2. De webbrowser is op de volgende url te vinden [http://192.168.4.1:8080](http://192.168.4.1:8080)
 
@@ -241,15 +252,4 @@ fotocycli: In een fotocyclus wordt er van elk gekozen LED een foto gemaakt plus 
 
 7. Als de timelapse klaar is, zijn de foto's terug vinden op de usb.
 
-**Notes** Onderaan het script moet de host veranderd worden door de jouw ingestelde IP-adres dus:
 
-```python
-if __name__ == "__main__":
-    app.run(host="localhost", port=8080, debug=True)
-```
-
-Naar bijvoorbeeld dit:
-```python
-if __name__ == "__main__":
-    app.run(host="192.168.4.1", port=8080, debug=True)
-```
