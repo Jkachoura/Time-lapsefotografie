@@ -211,7 +211,7 @@ WantedBy=multi-user.target
 Type=simple     
 User=JouwHostName           # JouwHostName verander je door je eigen gekozen hostname
 PermissionsStartOnly=true
-ExecStart=/usr/bin/python /home/JouwHostName/Time-lapsefotografie-main/flask-app/main.py
+ExecStart=/usr/bin/python /home/JouwHostName/Time-lapsefotografie/flask-app/main.py
 Restart=on-failure
 TimeoutSec=600
 ```
